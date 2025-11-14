@@ -1,0 +1,33 @@
+# External Breach Database - Credentials Found on Dark Web
+# Source: Collection #1 Data Breach (2019)
+# Total accounts in breach: 773 million
+# TechSolutions employees found: 3
+
+Email: carlos.admin@techsolutions.com
+Password: TechSol2024!Admin
+Source: LinkedIn breach 2021
+Status: ACTIVE ⚠️
+
+Email: maria.manager@techsolutions.com  
+Password: Manager2024!
+Source: Adobe breach 2013 (reused password)
+Status: ACTIVE ⚠️
+
+Email: juan.user@techsolutions.com
+Password: user123
+Source: RockYou2021 compilation
+Status: ACTIVE ⚠️
+
+# Additional compromised accounts from third-party services
+# These credentials may be reused across TechSolutions systems
+
+Email: ana.developer@techsolutions.com
+Password: DevPass456
+Source: Dropbox breach 2012
+Status: POTENTIALLY ACTIVE
+
+# Note: These credentials have been found in public breach databases
+# and are actively being used by threat actors for credential stuffing attacks.
+# 
+# Last verified: 2025-10-26
+# Threat level: CRITICAL

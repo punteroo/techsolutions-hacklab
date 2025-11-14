@@ -1,0 +1,48 @@
+version: '3.8'
+
+services:
+  db:
+    image: mysql:8.0
+    container_name: techsolutions-db
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: vulnerable123
+      MYSQL_DATABASE: techsolutions
+      MYSQL_USER: techuser
+      MYSQL_PASSWORD: techpass123
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+      - ./database/init.sql:/docker-entrypoint-initdb.d/init.sql
+    command: --general-log=1 --general-log-file=/var/lib/mysql/general.log
+    networks:
+      - techsolutions-network
+
+  web:
+    build: .
+    container_name: techsolutions-web
+    restart: unless-stopped
+    environment:
+      NODE_ENV: development
+      DB_HOST: db
+      DB_USER: root
+      DB_PASSWORD: vulnerable123
+      DB_NAME: techsolutions
+      JWT_SECRET: insecure-secret-key-do-not-use-in-production
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./src:/app/src
+      - ./logs:/app/logs
+    depends_on:
+      - db
+    networks:
+      - techsolutions-network
+
+volumes:
+  mysql_data:
+
+networks:
+  techsolutions-network:
+    driver: bridge

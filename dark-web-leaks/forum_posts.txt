@@ -1,0 +1,115 @@
+═══════════════════════════════════════════════════════════════
+DARK WEB FORUM POST - TechSolutions Data Leak
+═══════════════════════════════════════════════════════════════
+
+Forum: RaidForums (Mirror)
+Thread: TechSolutions S.A. Database Leak - Argentina/Chile
+Posted by: DataBroker2025
+Date: 2025-10-28 15:00:00 UTC
+Views: 3,847
+Replies: 156
+
+───────────────────────────────────────────────────────────────
+
+🔥 FRESH DATABASE LEAK - TechSolutions S.A. 🔥
+
+Hey fam, got something juicy for you today.
+
+Company: TechSolutions S.A.
+Location: Argentina & Chile  
+Industry: Software Development
+Size: ~150 employees
+
+📊 WHAT'S INCLUDED:
+═══════════════════════════════════════════════════════════════
+✅ 1,247 customer records (FULL PII)
+   • Full names, emails, phone numbers
+   • Physical addresses (Argentina & Chile)
+   • Credit card last 4 digits
+   • Purchase history
+
+✅ Employee credentials (5 accounts)
+   • Admin panel access
+   • Database credentials
+   • AWS keys
+   • VPN access
+
+✅ Payment records (247 transactions)
+   • Stripe integration data
+   • API keys included
+   • Transaction history
+
+✅ Database backup (347 MB)
+   • Full MySQL dump
+   • All tables included
+   • Plain text passwords 😂
+
+📁 SAMPLE DATA:
+═══════════════════════════════════════════════════════════════
+Roberto García | roberto.garcia@email.com | +54 11 4567-8901
+Card: **** **** **** 4532 | Buenos Aires, Argentina
+
+Laura Fernández | laura.fernandez@email.com | +54 11 5678-9012  
+Card: **** **** **** 7890 | Buenos Aires, Argentina
+
+Diego Martínez | diego.martinez@email.com | +56 2 2345-6789
+Card: **** **** **** 1234 | Santiago, Chile
+
+💰 PRICING:
+═══════════════════════════════════════════════════════════════
+Full database: 0.5 BTC (~$25,000)
+Customer list only: 0.2 BTC (~$10,000)
+Credentials only: 0.1 BTC (~$5,000)
+
+Sample available for verified buyers (25 records)
+
+🔐 VERIFICATION:
+═══════════════════════════════════════════════════════════════
+• Database confirmed live and active
+• Credentials tested and working
+• Data freshness: October 2025
+• Source: S3 bucket misconfiguration + SQL injection
+
+📧 CONTACT:
+═══════════════════════════════════════════════════════════════
+Telegram: @DataBroker2025
+Jabber: databroker@exploit.im
+PGP: [KEY ID: 0xABCDEF1234567890]
+
+⚠️ Escrow accepted for amounts over 0.3 BTC
+⚠️ No refunds - verify sample before purchase
+⚠️ Serious buyers only
+
+───────────────────────────────────────────────────────────────
+
+💬 REPLIES (Top 5):
+
+[User: SecurityResearcher_101]
+LOL another company with public S3 buckets 🤦
+When will they learn? Good find bro!
+
+[User: CryptoKing]
+PM sent. Interested in full pack.
+
+[User: DataCollector89]  
+Can confirm this is legit. Bought the customer list.
+Data is fresh and accurate. A++ seller 👍
+
+[User: WhiteHat_Warning]
+@TechSolutions if you're reading this, your security is TRASH.
+Fix your S3 bucket permissions and patch that SQL injection ASAP.
+Also, stop storing passwords in plaintext you absolute muppets.
+
+[User: BTC_Trader]
+0.5 BTC seems high for only 1.2k records tbh
+But if credentials work might be worth it
+
+───────────────────────────────────────────────────────────────
+
+[MODERATOR NOTE]
+This thread is for educational and research purposes only.
+RaidForums does not condone illegal activity. 😉
+
+═══════════════════════════════════════════════════════════════
+Thread closed. Further discussion in private.
+═══════════════════════════════════════════════════════════════

@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TechSolutions S.A. - Portal de Acceso</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+            overflow: hidden;
+            max-width: 900px;
+            width: 100%;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .warning-banner {
+            background: #ff6b6b;
+            color: white;
+            padding: 15px;
+            text-align: center;
+            font-weight: bold;
+            font-size: 14px;
+        }
+
+        .content {
+            padding: 40px;
+        }
+
+        .login-form {
+            max-width: 400px;
+            margin: 0 auto;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            color: #333;
+            font-weight: 500;
+        }
+
+        input[type="text"],
+        input[type="password"] {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 5px;
+            font-size: 14px;
+            transition: border-color 0.3s;
+        }
+
+        input[type="text"]:focus,
+        input[type="password"]:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .btn {
+            width: 100%;
+            padding: 12px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .message {
+            padding: 10px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+            display: none;
+        }
+
+        .message.success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .message.error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+        .info-section {
+            margin-top: 30px;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 5px;
+        }
+
+        .info-section h3 {
+            color: #667eea;
+            margin-bottom: 15px;
+        }
+
+        .vulnerability-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .vulnerability-list li {
+            padding: 10px;
+            margin-bottom: 10px;
+            background: white;
+            border-left: 4px solid #ff6b6b;
+            border-radius: 3px;
+        }
+
+        .vulnerability-list li strong {
+            color: #ff6b6b;
+        }
+
+        .credentials-hint {
+            background: #fff3cd;
+            border: 1px solid #ffc107;
+            padding: 15px;
+            border-radius: 5px;
+            margin-top: 20px;
+        }
+
+        .credentials-hint h4 {
+            color: #856404;
+            margin-bottom: 10px;
+        }
+
+        .credentials-hint code {
+            background: #fff;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: monospace;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="warning-banner">
+            ⚠️ LABORATORIO DE SEGURIDAD - APLICACIÓN INTENCIONALMENTE VULNERABLE - SOLO USO EDUCATIVO ⚠️
+        </div>
+        
+        <div class="header">
+            <h1>🏢 TechSolutions S.A.</h1>
+            <p>Portal de Acceso Corporativo</p>
+        </div>
+
+        <div class="content">
+            <div class="login-form">
+                <h2 style="text-align: center; margin-bottom: 30px; color: #333;">Inicio de Sesión</h2>
+                
+                <div id="message" class="message"></div>
+
+                <form id="loginForm">
+                    <div class="form-group">
+                        <label for="username">Usuario o Email:</label>
+                        <input type="text" id="username" name="username" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="password">Contraseña:</label>
+                        <input type="password" id="password" name="password" required>
+                    </div>
+
+                    <button type="submit" class="btn">Iniciar Sesión</button>
+                </form>
+
+                <div class="credentials-hint">
+                    <h4>🔑 Credenciales de Prueba (Lab)</h4>
+                    <p><strong>Usuario:</strong> <code>carlos.admin@techsolutions.com</code></p>
+                    <p><strong>Contraseña:</strong> <code>TechSol2024!Admin</code></p>
+                    <p style="margin-top: 10px; font-size: 12px; color: #856404;">
+                        💡 Tip: Este endpoint es vulnerable a SQL Injection. Intenta: <code>admin' OR '1'='1</code>
+                    </p>
+                </div>
+            </div>
+
+            <div class="info-section">
+                <h3>📋 Vulnerabilidades del Laboratorio</h3>
+                <ul class="vulnerability-list">
+                    <li><strong>SQL Injection:</strong> El formulario de login es vulnerable a inyección SQL</li>
+                    <li><strong>Credenciales Comprometidas:</strong> Las credenciales del admin fueron filtradas</li>
+                    <li><strong>S3 Bucket Público:</strong> Backups accesibles en <code>/s3-bucket/</code></li>
+                    <li><strong>Ransomware:</strong> Archivos cifrados en <code>/ransomware/encrypted/</code></li>
+                    <li><strong>Data Leak:</strong> Información de clientes en foros de hacking</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const loginForm = document.getElementById('loginForm');
+        const messageDiv = document.getElementById('message');
+
+        loginForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+
+            try {
+                const response = await fetch('/api/auth/login', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ username, password })
+                });
+
+                const data = await response.json();
+
+                if (data.success) {
+                    showMessage('✅ Login exitoso! Token: ' + data.token.substring(0, 50) + '...', 'success');
+                    localStorage.setItem('token', data.token);
+                    localStorage.setItem('user', JSON.stringify(data.user));
+                    
+                    setTimeout(() => {
+                        window.location.href = '/dashboard.html';
+                    }, 2000);
+                } else {
+                    showMessage('❌ ' + data.message, 'error');
+                }
+            } catch (error) {
+                showMessage('❌ Error de conexión: ' + error.message, 'error');
+            }
+        });
+
+        function showMessage(text, type) {
+            messageDiv.textContent = text;
+            messageDiv.className = 'message ' + type;
+            messageDiv.style.display = 'block';
+        }
+    </script>
+</body>
+</html>

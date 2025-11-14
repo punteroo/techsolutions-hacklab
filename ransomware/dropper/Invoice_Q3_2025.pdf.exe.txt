@@ -1,0 +1,55 @@
+# Ransomware Dropper - MALWARE SAMPLE (SIMULATED)
+# This is a HARMLESS simulation file for educational purposes only
+# In a real scenario, this would be a compiled executable
+
+# Filename: Invoice_Q3_2025.pdf.exe
+# MD5: 7a5d8f3e9c1b2d4a6e8f0a2c4e6d8b9f
+# SHA256: 3a5f8d9e2c1b4d6a8e0f2a4c6e8d0b9f1a3c5e7f9d1b3a5c7e9f1d3b5a7c9e1f
+# File Type: PE32 executable (GUI) Intel 80386, for MS Windows
+# File Size: 847 KB
+# Created: 2025-10-25
+# Ransomware Family: LockBit 3.0
+
+## Behavior Analysis (Simulated)
+
+### Initial Execution
+- Dropped via phishing email attachment
+- Masqueraded as PDF invoice
+- Executed by user: carlos.admin@techsolutions.com
+- Execution time: 2025-10-27 03:00:15 UTC
+
+### Privilege Escalation
+- Exploits: UAC Bypass (CVE-2019-1388)
+- Enables SeDebugPrivilege
+- Injects into explorer.exe
+
+### Persistence Mechanisms
+- Registry key: HKCU\Software\Microsoft\Windows\CurrentVersion\Run
+- Scheduled task: "Windows Update Check"
+- Creates service: "WindowsDefenderUpdate"
+
+### Network Communication
+- C2 Server: 45.142.214.198:8443
+- Protocol: HTTPS (encrypted communication)
+- Beacon interval: 60 seconds
+- Tor proxy: 185.220.101.47:9050
+
+### File Encryption
+- Algorithm: AES-256-CBC
+- Key exchange: RSA-2048
+- Target extensions: .doc, .docx, .xls, .xlsx, .pdf, .sql, .zip, .rar, .7z
+- Files encrypted: 847
+- Ransom note: README_DECRYPT.txt
+
+### IOCs (Indicators of Compromise)
+- File hash (MD5): 7a5d8f3e9c1b2d4a6e8f0a2c4e6d8b9f
+- File hash (SHA256): 3a5f8d9e2c1b4d6a8e0f2a4c6e8d0b9f1a3c5e7f9d1b3a5c7e9f1d3b5a7c9e1f
+- C2 IP: 45.142.214.198
+- C2 Domain: lockbit3oa7tbdgvz7w4qr6bgvhvknwgvxr5rpvdpnyn5p3j4gofh5id.onion
+- Bitcoin wallet: 1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa
+- Mutex: Global\LockBit3.0_Mutex_2025
+
+## DISCLAIMER
+This is a SIMULATED malware sample for educational purposes.
+No actual malicious code is present in this repository.
+DO NOT use real malware samples without proper isolation and authorization.

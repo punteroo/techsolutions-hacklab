@@ -1,0 +1,39 @@
+{
+  "export_date": "2025-10-15T10:30:00Z",
+  "total_records": 247,
+  "payment_records": [
+    {
+      "transaction_id": "TXN-2025-001234",
+      "customer_email": "roberto.garcia@email.com",
+      "amount": 1250.50,
+      "currency": "USD",
+      "card_last4": "4532",
+      "card_brand": "Visa",
+      "status": "completed",
+      "date": "2025-09-15T14:30:00Z"
+    },
+    {
+      "transaction_id": "TXN-2025-001235",
+      "customer_email": "laura.fernandez@email.com",
+      "amount": 890.75,
+      "currency": "USD",
+      "card_last4": "7890",
+      "card_brand": "Mastercard",
+      "status": "completed",
+      "date": "2025-09-16T10:15:00Z"
+    },
+    {
+      "transaction_id": "TXN-2025-001236",
+      "customer_email": "diego.martinez@email.com",
+      "amount": 2100.00,
+      "currency": "USD",
+      "card_last4": "1234",
+      "card_brand": "Visa",
+      "status": "processing",
+      "date": "2025-09-20T16:45:00Z"
+    }
+  ],
+  "note": "CONFIDENTIAL: Payment gateway integration data",
+  "stripe_api_key": "sk_test_51234567890abcdefghijklmnop",
+  "webhook_secret": "whsec_abcdefghijklmnopqrstuvwxyz1234567890"
+}
