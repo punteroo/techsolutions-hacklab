@@ -1,157 +1,170 @@
-# Quick Start Guide - TechSolutions Security Lab
+# Guía de Inicio Rápido - Laboratorio de Seguridad TechSolutions
 
-## 1. Prerequisites
+## 1. Prerrequisitos
 
 ```bash
-# Install Node.js (18+)
-node --version  # Should be 18+
+# Instalar Node.js (18+)
+node --version  # Debe ser 18+
 
-# Install Docker and Docker Compose
+# Instalar Docker y Docker Compose
 docker --version
 docker-compose --version
 ```
 
-## 2. Setup /etc/hosts
+## 2. Configurar /etc/hosts
 
-Add this line to your `/etc/hosts` file:
+Agregar esta línea al archivo `/etc/hosts`:
 
 ```
 127.0.0.1   techsolutions.com.test
 ```
 
-On Linux/Mac:
+En Linux/Mac:
 ```bash
 sudo nano /etc/hosts
 ```
 
-On Windows (as Administrator):
+En Windows (como Administrador):
 ```
 notepad C:\Windows\System32\drivers\etc\hosts
 ```
 
-## 3. Clone and Setup
+## 3. Clonar y Configurar
 
 ```bash
-# Clone the repository
+# Clonar el repositorio
 git clone <your-repo-url>
 cd techsolutions
 
-# Install dependencies
+# Instalar dependencias
 npm install
 
-# Copy environment file
+# Copiar archivo de entorno
 cp .env.example .env
 ```
 
-## 4. Start the Lab
+## 4. Iniciar el Laboratorio
 
 ```bash
-# Start all services (database + web app)
+# Iniciar todos los servicios (base de datos + aplicación web)
 docker-compose up -d
 
-# Wait for database to be ready (10-15 seconds)
+# Esperar a que la base de datos esté lista (10-15 segundos)
 sleep 15
 
-# Initialize database with vulnerable data
+# Inicializar base de datos con datos vulnerables
 npm run init-db
 
-# Generate forensic logs
+# Generar logs forenses
 npm run generate-logs
 ```
 
-## 5. Access the Application
+## 5. Acceder a la Aplicación
 
-The web application is now running in Docker. Open your browser and navigate to:
+La aplicación web ya está ejecutándose en Docker. Abrir el navegador y navegar a:
 ```
 http://techsolutions.com.test:3000
 ```
 
-**Test Credentials:**
-- Username: `carlos.admin@techsolutions.com`
-- Password: `TechSol2024!Admin`
+**Credenciales de Prueba:**
+- Usuario: `carlos.admin@techsolutions.com`
+- Contraseña: `TechSol2024!Admin`
 
-**SQL Injection Test:**
-- Username: `admin' OR '1'='1`
-- Password: `anything`
+**Prueba de Inyección SQL:**
+- Usuario: `admin' OR 1=1-- `
+- Contraseña: `anything`
 
-## 6. Explore Vulnerabilities
+## 6. Explorar Vulnerabilidades
 
-### SQL Injection
+### Inyección SQL
+
+**Desde el Frontend Web:**
+- Navegar a http://techsolutions.com.test:3000
+- Usuario: `admin' OR 1=1-- `
+- Contraseña: `anything`
+
+**Usando curl:**
 ```bash
-# Test with curl
-curl -X POST http://techsolutions.com.test:3000/api/login \
+# Probar con curl
+curl -X POST http://techsolutions.com.test:3000/api/auth/login \
   -H "Content-Type: application/json" \
-  -d '{"username":"admin'\'' OR '\''1'\''='\''1","password":"anything"}'
+  -d '{"username":"admin'\'' OR 1=1-- ","password":"anything"}'
 ```
 
-### S3 Bucket Exposure
+**Usando PowerShell:**
+```powershell
+# Crear archivo de payload
+echo '{"username":"admin'\'' OR 1=1-- ","password":"anything"}' > payload.json
+Invoke-WebRequest -Uri "http://techsolutions.com.test:3000/api/auth/login" `
+  -Method POST -ContentType "application/json" -InFile "payload.json"
+### Exposición de Bucket S3
 ```bash
-# View exposed files
+# Ver archivos expuestos
 ls -la s3-bucket/backups/
 cat s3-bucket/backups/credentials.txt
 ```
 
-### Ransomware Artifacts
+### Artefactos de Ransomware
 ```bash
-# Examine encrypted files
+# Examinar archivos cifrados
 ls ransomware/encrypted/
 cat ransomware/README_DECRYPT.txt
 ```
 
-## 7. Forensic Analysis
+## 7. Análisis Forense
 
 ```bash
-# Generate attack timeline
+# Generar timeline del ataque
 npm run generate-timeline
 
-# Check for data leaks
+# Verificar filtraciones de datos
 npm run check-leaks
 
-# Analyze ransomware
+# Analizar ransomware
 npm run analyze-ransomware
 
-# Correlate events
+# Correlacionar eventos
 npm run correlate-timeline
 ```
 
-## 8. Stop the Lab
+## 8. Detener el Laboratorio
 
 ```bash
-# Stop all services
+# Detener todos los servicios
 docker-compose down
 
-# Remove volumes (clean slate)
+# Remover volúmenes (estado limpio)
 docker-compose down -v
 ```
 
-## Troubleshooting
+## Solución de Problemas
 
-### Port 3000 already in use:
+### Puerto 3000 ya está en uso:
 ```bash
-# Change PORT in .env file
+# Cambiar PORT en el archivo .env
 PORT=3001
 ```
 
-### Database connection failed:
+### Fallo de conexión a la base de datos:
 ```bash
-# Restart database
+# Reiniciar base de datos
 docker-compose restart db
 
-# Check database logs
+# Verificar logs de la base de datos
 docker logs techsolutions-db
 ```
 
-### Cannot resolve techsolutions.com.test:
+### No se puede resolver techsolutions.com.test:
 ```bash
-# Verify /etc/hosts entry
+# Verificar entrada en /etc/hosts
 cat /etc/hosts | grep techsolutions
 ```
 
-## Next Steps
+## Próximos Pasos
 
-1. Read the full README.md
-2. Follow the FORENSIC_GUIDE.md
-3. Try all exploitation scenarios
-4. Practice incident response
+1. Leer el README.md completo
+2. Seguir la FORENSIC_GUIDE.md
+3. Probar todos los escenarios de explotación
+4. Practicar respuesta a incidentes
 
-Happy hacking! 🔒
+¡Feliz hacking!

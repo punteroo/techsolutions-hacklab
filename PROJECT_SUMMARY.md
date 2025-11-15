@@ -1,103 +1,100 @@
-# TechSolutions S.A. - Security Lab Summary
+# TechSolutions S.A. - Resumen del Laboratorio de Seguridad
 
-## 🎯 Lab Overview
+## Descripción General del Laboratorio
 
-This repository contains a complete, self-contained security training lab that simulates a real-world cybersecurity incident at a fictional company called TechSolutions S.A.
+Este repositorio contiene un laboratorio de entrenamiento en seguridad completo y autónomo que simula un incidente real de ciberseguridad en una empresa ficticia llamada TechSolutions S.A.
 
-## 📦 What's Included
+## Qué Está Incluido
 
-### 1. **Vulnerable Web Application** (TypeScript + Express)
-- Intentionally vulnerable login endpoint (SQL Injection)
-- Unsafe credential storage (plain text passwords)
-- Exposed admin panel
-- JWT authentication (with weak secrets)
-- Complete user management system
+### 1. **Aplicación Web Vulnerable** (TypeScript + Express)
+- Endpoint de login intencionalmente vulnerable (Inyección SQL)
+- Almacenamiento inseguro de credenciales (contraseñas en texto plano)
+- Panel de administración expuesto
+- Autenticación JWT (con secretos débiles)
+- Sistema completo de gestión de usuarios
 
-### 2. **Database** (MySQL)
-- 1,247 customer records
-- Compromised admin accounts
-- Backdoor user account
-- Query logging enabled for forensics
+### 2. **Base de Datos** (MySQL)
+- 1,247 registros de clientes
+- Cuentas de administrador comprometidas
+- Cuenta de usuario backdoor
+- Logging de consultas habilitado para forense
 
-### 3. **Simulated S3 Bucket**
-- Database backups with sensitive data
-- Customer PII export
-- Payment records
-- Hardcoded credentials
-- AWS access keys
+### 3. **Bucket S3 Simulado**
+- Backups de base de datos con datos sensibles
+- Exportación de PII de clientes
+- Registros de pagos
+- Credenciales hardcodeadas
+- Claves de acceso AWS
 
-### 4. **Ransomware Artifacts**
-- 4 encrypted files (.locked extension)
-- Ransom note (LockBit 3.0 simulation)
-- Malware dropper information
-- IOCs (Indicators of Compromise)
+### 4. **Artefactos de Ransomware**
+- 4 archivos cifrados (extensión .locked)
+- Nota de rescate (simulación LockBit 3.0)
+- Información del dropper del malware
+- IOCs (Indicadores de Compromiso)
 
-### 5. **Forensic Logs**
-- Authentication logs (SQL injection attempts)
-- Network traffic logs (data exfiltration)
-- Ransomware execution logs
-- Complete timeline of attack
+### 5. **Logs Forenses**
+- Logs de autenticación (intentos de inyección SQL)
+- Logs de tráfico de red (exfiltración de datos)
+- Logs de ejecución de ransomware
+- Timeline completo del ataque
 
-### 6. **Dark Web Intelligence**
-- Simulated forum post
-- Leaked data advertisement
-- Bitcoin wallet for ransom
-- OSINT research materials
+### 6. **Inteligencia de Web Oscura**
+- Publicación simulada en foro
+- Anuncio de datos filtrados
+- Billetera Bitcoin para rescate
+- Materiales de investigación OSINT
 
-## 🔐 Vulnerabilities Implemented
+## Vulnerabilidades Implementadas
 
-| # | Vulnerability | OWASP Top 10 | Severity | Location |
-|---|---------------|--------------|----------|----------|
-| 1 | SQL Injection | A03:2021 | Critical | `/api/auth/login` |
-| 2 | Insecure Data Storage | A02:2021 | Critical | S3 bucket simulation |
-| 3 | Broken Authentication | A07:2021 | High | Compromised credentials |
-| 4 | Security Misconfiguration | A05:2021 | High | Public S3 bucket |
-| 5 | Insufficient Logging | A09:2021 | Medium | Delayed detection |
+| # | Vulnerabilidad | OWASP Top 10 | Severidad | Ubicación |
+|---|----------------|--------------|-----------|-----------|
+| 1 | Inyección SQL | A03:2021 | Crítica | `/api/auth/login` |
+| 2 | Almacenamiento Inseguro de Datos | A02:2021 | Crítica | Simulación bucket S3 |
+| 3 | Autenticación Quebrada | A07:2021 | Alta | Credenciales comprometidas |
+| 4 | Configuración de Seguridad Incorrecta | A05:2021 | Alta | Bucket S3 público |
+| 5 | Logging Insuficiente | A09:2021 | Media | Detección retrasada |
 
-## 🎓 Learning Objectives
+## Objetivos de Aprendizaje
 
-After completing this lab, you will:
+Después de completar este laboratorio, podrás:
 
-1. ✅ Understand common web application vulnerabilities
-2. ✅ Perform SQL injection attacks and exploitation
-3. ✅ Conduct digital forensics investigation
-4. ✅ Analyze ransomware behavior and IOCs
-5. ✅ Correlate events from multiple log sources
-6. ✅ Create comprehensive incident response reports
-7. ✅ Map attacks to MITRE ATT&CK framework
-8. ✅ Practice remediation and security hardening
+1. Entender vulnerabilidades comunes en aplicaciones web
+2. Realizar ataques de inyección SQL y explotación
+3. Conducir investigación forense digital
+4. Analizar comportamiento de ransomware e IOCs
+5. Correlacionar eventos de múltiples fuentes de logs
+6. Crear reportes comprensivos de respuesta a incidentes
+7. Mapear ataques al framework MITRE ATT&CK
+8. Practicar remediación y hardening de seguridad
 
-## 🚀 Quick Start (5 Minutes)
+## Inicio Rápido (5 Minutos)
 
 ```bash
-# 1. Add to /etc/hosts
+# 1. Agregar a /etc/hosts
 echo "127.0.0.1   techsolutions.com.test" | sudo tee -a /etc/hosts
 
-# 2. Clone and setup
+# 2. Clonar y configurar
 git clone <your-repo-url>
 cd techsolutions
 npm install
 
-# 3. Start the lab
+# 3. Iniciar el laboratorio
 docker-compose up -d
 sleep 15
 npm run init-db
 npm run generate-logs
 
-# 4. Start web app
-npm run dev
-
-# 5. Access the lab
-open http://techsolutions.com.test:3000
+# 4. Acceder al laboratorio (la app web ya está corriendo)
+# Navegar a: http://techsolutions.com.test:3000
 ```
 
-## 📖 Documentation Structure
+## Estructura de Documentación
 
-- **README.md** - Complete lab documentation (you are here)
-- **QUICKSTART.md** - Fast setup guide
-- **FORENSIC_GUIDE.md** - Step-by-step forensic analysis (350+ lines)
-- **ATTACK_TIMELINE.md** - Generated after running `npm run generate-timeline`
-- **LICENSE** - MIT License with educational use disclaimer
+- **README.md** - Documentación completa del laboratorio
+- **QUICKSTART.md** - Guía de configuración rápida
+- **FORENSIC_GUIDE.md** - Análisis forense paso a paso (350+ líneas)
+- **ATTACK_TIMELINE.md** - Generado después de ejecutar `npm run generate-timeline`
+- **LICENSE** - Licencia MIT con descargo de uso educacional
 
 ## 🔬 Forensic Analysis Tools
 

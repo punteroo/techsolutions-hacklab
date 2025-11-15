@@ -1,33 +1,33 @@
-# Deployment Guide - TechSolutions Security Lab
+# Guía de Despliegue - Laboratorio de Seguridad TechSolutions
 
-## 🚀 Complete Deployment Instructions
+## Instrucciones Completas de Despliegue
 
-This guide will help you deploy the TechSolutions Security Lab from scratch.
+Esta guía te ayudará a desplegar el Laboratorio de Seguridad TechSolutions desde cero.
 
 ---
 
-## Prerequisites Check
+## Verificación de Prerrequisitos
 
-### Required Software
+### Software Requerido
 
 ```bash
-# Check Node.js version (must be 18+)
+# Verificar versión de Node.js (debe ser 18+)
 node --version
 
-# Check npm
+# Verificar npm
 npm --version
 
-# Check Docker
+# Verificar Docker
 docker --version
 
-# Check Docker Compose
+# Verificar Docker Compose
 docker-compose --version
 
-# Check git
+# Verificar git
 git --version
 ```
 
-If any are missing, install them:
+Si falta alguno, instalarlos:
 
 **Ubuntu/Debian:**
 ```bash
@@ -45,57 +45,57 @@ sudo apt-get install git
 
 **macOS:**
 ```bash
-# Using Homebrew
+# Usando Homebrew
 brew install node
 brew install --cask docker
 ```
 
 **Windows:**
-- Install Node.js from https://nodejs.org
-- Install Docker Desktop from https://www.docker.com
-- Install Git from https://git-scm.com
+- Instalar Node.js desde https://nodejs.org
+- Instalar Docker Desktop desde https://www.docker.com
+- Instalar Git desde https://git-scm.com
 
 ---
 
-## Step 1: Clone the Repository
+## Paso 1: Clonar el Repositorio
 
 ```bash
-# Clone from GitHub
+# Clonar desde GitHub
 git clone https://github.com/yourusername/techsolutions-lab.git
 cd techsolutions-lab
 
-# Or if you downloaded as ZIP
+# O si descargaste como ZIP
 unzip techsolutions-lab.zip
 cd techsolutions-lab
 ```
 
 ---
 
-## Step 2: Configure DNS
+## Paso 2: Configurar DNS
 
 ### Linux/Mac
 
 ```bash
-# Add entry to /etc/hosts
+# Agregar entrada a /etc/hosts
 echo "127.0.0.1   techsolutions.com.test" | sudo tee -a /etc/hosts
 
-# Verify
+# Verificar
 cat /etc/hosts | grep techsolutions
 ```
 
-### Windows (Run as Administrator)
+### Windows (Ejecutar como Administrador)
 
 ```powershell
-# Open PowerShell as Administrator
+# Abrir PowerShell como Administrador
 Add-Content C:\Windows\System32\drivers\etc\hosts "127.0.0.1   techsolutions.com.test"
 
-# Verify
+# Verificar
 Get-Content C:\Windows\System32\drivers\etc\hosts | Select-String techsolutions
 ```
 
 ---
 
-## Step 3: Install Dependencies
+## Paso 3: Instalar Dependencias
 
 ```bash
 # Install Node.js packages

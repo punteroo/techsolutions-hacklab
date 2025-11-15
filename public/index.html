@@ -171,11 +171,11 @@
 <body>
     <div class="container">
         <div class="warning-banner">
-            ⚠️ LABORATORIO DE SEGURIDAD - APLICACIÓN INTENCIONALMENTE VULNERABLE - SOLO USO EDUCATIVO ⚠️
+            LABORATORIO DE SEGURIDAD - APLICACIÓN INTENCIONALMENTE VULNERABLE - SOLO USO EDUCATIVO
         </div>
         
         <div class="header">
-            <h1>🏢 TechSolutions S.A.</h1>
+            <h1>TechSolutions S.A.</h1>
             <p>Portal de Acceso Corporativo</p>
         </div>
 
@@ -200,17 +200,17 @@
                 </form>
 
                 <div class="credentials-hint">
-                    <h4>🔑 Credenciales de Prueba (Lab)</h4>
+                    <h4>Credenciales de Prueba (Lab)</h4>
                     <p><strong>Usuario:</strong> <code>carlos.admin@techsolutions.com</code></p>
                     <p><strong>Contraseña:</strong> <code>TechSol2024!Admin</code></p>
                     <p style="margin-top: 10px; font-size: 12px; color: #856404;">
-                        💡 Tip: Este endpoint es vulnerable a SQL Injection. Intenta: <code>admin' OR '1'='1</code>
+                        Tip: Este endpoint es vulnerable a SQL Injection. Intenta con usuario <code>admin' OR 1=1-- </code> y contraseña <code>'</code>
                     </p>
                 </div>
             </div>
 
             <div class="info-section">
-                <h3>📋 Vulnerabilidades del Laboratorio</h3>
+                <h3>Vulnerabilidades del Laboratorio</h3>
                 <ul class="vulnerability-list">
                     <li><strong>SQL Injection:</strong> El formulario de login es vulnerable a inyección SQL</li>
                     <li><strong>Credenciales Comprometidas:</strong> Las credenciales del admin fueron filtradas</li>
@@ -244,7 +244,7 @@
                 const data = await response.json();
 
                 if (data.success) {
-                    showMessage('✅ Login exitoso! Token: ' + data.token.substring(0, 50) + '...', 'success');
+                    showMessage('Login exitoso! Token: ' + data.token.substring(0, 50) + '...', 'success');
                     localStorage.setItem('token', data.token);
                     localStorage.setItem('user', JSON.stringify(data.user));
                     
@@ -252,10 +252,10 @@
                         window.location.href = '/dashboard.html';
                     }, 2000);
                 } else {
-                    showMessage('❌ ' + data.message, 'error');
+                    showMessage('Error: ' + data.message, 'error');
                 }
             } catch (error) {
-                showMessage('❌ Error de conexión: ' + error.message, 'error');
+                showMessage('Error de conexión: ' + error.message, 'error');
             }
         });
 

@@ -1,53 +1,53 @@
-# FORENSIC ANALYSIS GUIDE
+# GUÍA DE ANÁLISIS FORENSE
 
-## Step-by-Step Forensic Investigation
+## Investigación Forense Paso a Paso
 
-This guide walks you through a complete forensic analysis of the TechSolutions S.A. security incident.
-
----
-
-## Prerequisites
-
-- TechSolutions lab environment running
-- Basic knowledge of Linux/Unix commands
-- Understanding of SQL and networking concepts
-- Familiarity with log analysis
+Esta guía te lleva a través de un análisis forense completo del incidente de seguridad de TechSolutions S.A.
 
 ---
 
-## Phase 1: Evidence Collection (30 minutes)
+## Prerrequisitos
 
-### 1.1 Secure the Environment
+- Entorno del laboratorio TechSolutions ejecutándose
+- Conocimiento básico de comandos Linux/Unix
+- Comprensión de conceptos SQL y de redes
+- Familiaridad con análisis de logs
+
+---
+
+## Fase 1: Recolección de Evidencia (30 minutos)
+
+### 1.1 Asegurar el Entorno
 
 ```bash
-# Stop the compromised systems (Docker containers)
+# Detener los sistemas comprometidos (contenedores Docker)
 docker-compose down
 
-# Create forensic working directory
+# Crear directorio de trabajo forense
 mkdir -p forensics/evidence
 mkdir -p forensics/analysis
 mkdir -p forensics/reports
 
-# Copy all logs for analysis
+# Copiar todos los logs para análisis
 cp -r logs/ forensics/evidence/
 cp -r s3-bucket/ forensics/evidence/
 cp -r ransomware/ forensics/evidence/
 ```
 
-### 1.2 Generate Initial Checksums
+### 1.2 Generar Checksums Iniciales
 
 ```bash
-# Create hash checksums for evidence integrity
+# Crear checksums hash para integridad de evidencia
 cd forensics/evidence
 find . -type f -exec md5sum {} \; > ../checksums.txt
 ```
 
-### 1.3 Document Initial Findings
+### 1.3 Documentar Hallazgos Iniciales
 
-Create a file `forensics/initial-observations.md`:
+Crear archivo `forensics/initial-observations.md`:
 
 ```markdown
-# Initial Observations
+# Observaciones Iniciales
 - Date/Time of discovery: [Your date]
 - Systems affected: Web server, database, file servers
 - Evidence collected: Logs, encrypted files, network captures

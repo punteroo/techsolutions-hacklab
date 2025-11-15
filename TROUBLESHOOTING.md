@@ -1,24 +1,24 @@
-# Troubleshooting Guide - TechSolutions Security Lab
+# Guía de Solución de Problemas - Laboratorio de Seguridad TechSolutions
 
-## Common Issues and Solutions
+## Problemas Comunes y Soluciones
 
 ---
 
-### ✅ FIXED: Docker Build Failing - TypeScript Configuration Error
+### SOLUCIONADO: Fallo en Compilación de Docker - Error de Configuración TypeScript
 
-**Issue:**
+**Problema:**
 ```
 error TS6059: File '/app/scripts/simulate-recovery.ts' is not under 'rootDir' '/app/src'. 
 'rootDir' is expected to contain all source files.
 ```
 
-**Cause:**
-The `tsconfig.json` had conflicting settings:
-- `rootDir` was set to `./src` (only compile source code)
-- `include` pattern included both `src/**/*` AND `scripts/**/*` (trying to compile helper scripts too)
+**Causa:**
+El `tsconfig.json` tenía configuraciones conflictivas:
+- `rootDir` estaba configurado en `./src` (solo compilar código fuente)
+- El patrón `include` incluía tanto `src/**/*` Y `scripts/**/*` (tratando de compilar scripts auxiliares también)
 
-**Solution:**
-Modified `tsconfig.json` to exclude scripts from compilation:
+**Solución:**
+Modificado `tsconfig.json` para excluir scripts de la compilación:
 
 ```json
 {
@@ -31,99 +31,103 @@ Modified `tsconfig.json` to exclude scripts from compilation:
 }
 ```
 
-**Why this works:**
-- The `scripts/` directory contains **standalone helper scripts** for forensic analysis
-- These scripts are executed via `ts-node` (not compiled)
-- The Docker container only needs the **web application** compiled (`src/` directory)
-- Helper scripts run outside the container using `npm run` commands
+**Por qué funciona:**
+- El directorio `scripts/` contiene **scripts auxiliares independientes** para análisis forense
+- Estos scripts se ejecutan vía `ts-node` (no se compilan)
+- El contenedor Docker solo necesita la **aplicación web** compilada (directorio `src/`)
+- Los scripts auxiliares se ejecutan fuera del contenedor usando comandos `npm run`
 
-**Verification:**
+**Verificación:**
 ```bash
-# Test local build
+# Probar compilación local
 npm run build
 
-# Test Docker build
+# Probar compilación Docker
 docker-compose build web
 
-# Both should succeed now
+# Ambos deberían funcionar ahora
 ```
 
 ---
 
-### Issue: Port 3000 Already in Use
+### Problema: Puerto 3000 Ya Está en Uso
 
-**Symptoms:**
+**Síntomas:**
 ```
 Error: listen EADDRINUSE: address already in use :::3000
 ```
 
-**Solutions:**
+**Soluciones:**
 
-**Option 1: Find and kill the process**
+**Opción 1: Encontrar y terminar el proceso**
 ```bash
-# Find process using port 3000
+# En Linux/Mac - Encontrar proceso usando puerto 3000
 lsof -i :3000
 
-# Kill it (replace PID with actual process ID)
-kill -9 <PID>
+# En Windows - Encontrar proceso usando puerto 3000
+netstat -ano | findstr :3000
+
+# Terminarlo (reemplazar PID con ID del proceso actual)
+kill -9 <PID>  # Linux/Mac
+taskkill /PID <PID> /F  # Windows
 ```
 
-**Option 2: Change the port**
+**Opción 2: Cambiar el puerto**
 ```bash
-# Edit .env file
+# Editar archivo .env
 PORT=3001
 
-# Restart application
+# Reiniciar aplicación
 npm run dev
 ```
 
-**Option 3: Use Docker instead**
+**Opción 3: Usar Docker en su lugar**
 ```bash
-# Docker maps ports differently
+# Docker mapea puertos de forma diferente
 docker-compose up -d
 ```
 
 ---
 
-### Issue: Database Connection Refused
+### Problema: Conexión a Base de Datos Rechazada
 
-**Symptoms:**
+**Síntomas:**
 ```
 Error: connect ECONNREFUSED 127.0.0.1:3306
 ER_ACCESS_DENIED_ERROR: Access denied for user 'root'@'localhost'
 ```
 
-**Solutions:**
+**Soluciones:**
 
-**Check 1: Is MySQL running?**
+**Verificación 1: ¿Está ejecutándose MySQL?**
 ```bash
-# Check Docker containers
+# Verificar contenedores Docker
 docker-compose ps
 
-# Should show techsolutions-db as "Up"
+# Debería mostrar techsolutions-db como "Up"
 ```
 
-**Check 2: Wait for MySQL to initialize**
+**Verificación 2: Esperar a que MySQL se inicialice**
 ```bash
-# MySQL takes 15-20 seconds to fully start
+# MySQL toma 15-20 segundos en iniciarse completamente
 docker-compose up -d db
 sleep 20
 npm run init-db
 ```
 
-**Check 3: Verify credentials**
+**Verificación 3: Verificar credenciales**
 ```bash
-# Check .env file matches docker-compose.yml
+# Verificar que el archivo .env coincida con docker-compose.yml
 cat .env | grep DB_
 cat docker-compose.yml | grep MYSQL_
 ```
 
-**Check 4: Reset database**
+**Verificación 4: Resetear base de datos**
 ```bash
-# Stop and remove containers
+# Detener y remover contenedores
 docker-compose down -v
 
-# Start fresh
+# Iniciar desde cero
 docker-compose up -d db
 sleep 20
 npm run init-db
@@ -131,69 +135,70 @@ npm run init-db
 
 ---
 
-### Issue: DNS Not Resolving (techsolutions.com.test)
+### Problema: DNS No Resuelve (techsolutions.com.test)
 
-**Symptoms:**
+**Síntomas:**
 ```
 curl: (6) Could not resolve host: techsolutions.com.test
 ```
 
-**Solutions:**
+**Soluciones:**
 
 **Linux/Mac:**
 ```bash
-# Add entry to /etc/hosts
+# Agregar entrada a /etc/hosts
 echo "127.0.0.1   techsolutions.com.test" | sudo tee -a /etc/hosts
 
-# Verify
+# Verificar
 cat /etc/hosts | grep techsolutions
 
-# Flush DNS cache (Mac)
+# Limpiar cache DNS (Mac)
 sudo dscacheutil -flushcache
 
-# Flush DNS cache (Linux)
+# Limpiar cache DNS (Linux)
 sudo systemd-resolve --flush-caches
 ```
 
 **Windows:**
 ```powershell
-# Run PowerShell as Administrator
+# Ejecutar PowerShell como Administrador
 Add-Content C:\Windows\System32\drivers\etc\hosts "127.0.0.1   techsolutions.com.test"
 
-# Flush DNS
+# Limpiar DNS
 ipconfig /flushdns
 ```
 
-**Alternative: Use localhost**
+**Alternativa: Usar localhost**
 ```bash
-# Access via IP instead
+# Acceder vía IP en su lugar
 curl http://localhost:3000
 ```
 
 ---
 
-### Issue: npm install Fails
+### Problema: npm install Falla
 
-**Symptoms:**
+**Síntomas:**
 ```
 npm ERR! code EINTEGRITY
 npm ERR! Verification failed while extracting
 ```
 
-**Solutions:**
+**Soluciones:**
 
 ```bash
-# Clear npm cache
+# Limpiar cache de npm
 npm cache clean --force
 
-# Delete lock file and node_modules
-rm -rf node_modules package-lock.json
+# Eliminar lock file y node_modules
+rm -rf node_modules package-lock.json  # Linux/Mac
+Remove-Item -Recurse -Force node_modules, package-lock.json  # Windows PowerShell
 
-# Reinstall
+# Reinstalar
 npm install
 ```
 
-**If still failing:**
+**Si aún falla:**
 ```bash
 # Update npm itself
 npm install -g npm@latest

