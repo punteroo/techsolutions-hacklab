@@ -57,14 +57,11 @@ npm run init-db
 
 # Generate forensic logs
 npm run generate-logs
-
-# Start the web application
-npm run dev
 ```
 
 ## 5. Access the Application
 
-Open your browser and navigate to:
+The web application is now running in Docker. Open your browser and navigate to:
 ```
 http://techsolutions.com.test:3000
 ```

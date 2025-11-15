@@ -12,6 +12,7 @@ RUN npm install
 # Copy source code
 COPY src ./src
 COPY scripts ./scripts
+COPY public ./public
 
 # Build the application
 RUN npm run build
